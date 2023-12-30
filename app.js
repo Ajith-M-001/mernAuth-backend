@@ -3,15 +3,22 @@ import connectDB from "./database/db.js";
 import userRouter from "./router/userRouter.js";
 import { errorHandler, notFound } from "./middleWare/errorHandler.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 // import dotenv from "dotenv";
 // dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 6000;
 
+const corsOptions = {
+  origin: "https://mernauth-frontend-vic2.onrender.com",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser())
+app.use(cookieParser());
 app.use("/api/users", userRouter);
 app.get("/", (req, res) => {
   res.send("Server started");
