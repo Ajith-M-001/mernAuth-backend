@@ -1,3 +1,4 @@
+import path from "path"
 import express from "express";
 import connectDB from "./database/db.js";
 import userRouter from "./router/userRouter.js";
@@ -11,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 6000;
 
 const corsOptions = {
-  origin: "https://mernauth-frontend-vic2.onrender.com",
+  origin: "https://mernauth-frontend-lug7.onrender.com",
   credentials: true,
 };
 
@@ -26,6 +27,12 @@ app.get("/", (req, res) => {
 
 app.use(notFound);
 app.use(errorHandler);
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
+
 const startServer = async () => {
   try {
     await connectDB();
